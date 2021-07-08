@@ -101,7 +101,7 @@ idf.py flash
 ![config-app](https://user-images.githubusercontent.com/6020549/124848275-7f33dc80-dfd7-11eb-8a15-1ea217417e34.jpg)
 
 # Definition from CANbus to USB
-When CANbus data is received, it is sent by HTTP POST according to csv/can2usb.csv.   
+When CANbus data is received, it is sent by USB OTG according to csv/can2usb.csv.   
 The file can2usb.csv has three columns.   
 In the first column you need to specify the CAN Frame type.   
 The CAN frame type is either S(Standard frame) or E(Extended frame).   
