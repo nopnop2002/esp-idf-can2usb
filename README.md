@@ -17,16 +17,16 @@ Because the ESP32 does not support USB OTG.
 
 2. SN65HVD23x CAN-BUS Transceiver   
 
-|SN65HVD23x||ESP32|ESP32-S2||
-|:-:|:-:|:-:|:-:|:-:|
-|D(CTX)|--|GPIO21|GPIO17|(*1)|
-|GND|--|GND|GND||
-|Vcc|--|3.3V|3.3V||
-|R(CRX)|--|GPIO22|GPIO18|(*1)|
-|Vref|--|N/C|N/C||
-|CANL|--|||To CAN Bus|
-|CANH|--|||To CAN Bus|
-|RS|--|GND|GND|(*2)|
+|SN65HVD23x||ESP32-S2||
+|:-:|:-:|:-:|:-:|
+|D(CTX)|--|GPIO17|(*1)|
+|GND|--|GND||
+|Vcc|--|3.3V||
+|R(CRX)|--|GPIO18|(*1)|
+|Vref|--|N/C||
+|CANL|--||To CAN Bus|
+|CANH|--||To CAN Bus|
+|RS|--|GND|(*2)|
 
 (*1) You can change using menuconfig.
 
