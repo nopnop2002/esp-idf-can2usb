@@ -1,5 +1,7 @@
 # esp-idf-can2usb
 CANbus to USB bridge using esp32.
+The ESP32-S2 has a full-speed USB OTG peripheral with integrated transceivers and is compliant with the USB 1.1 specification.   
+GPIO19 and GPIO20 can be used as D- and D + of USB respectively.   
 
 It's purpose is to be a bridge between a CAN-Bus and a USB OTG.    
 
