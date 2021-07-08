@@ -4,6 +4,7 @@ The ESP32-S2 has a full-speed USB OTG peripheral with integrated transceivers an
 GPIO19 and GPIO20 can be used as D- and D + of USB respectively.   
 
 It's purpose is to be a bridge between a CAN-Bus and a USB OTG.    
+Unlike the standard serial port, the USB OTG port does not output ESP32 boot messages.   
 
 ![slide0001](https://user-images.githubusercontent.com/6020549/124847532-0718e700-dfd6-11eb-99f8-45ffef024304.jpg)
 
