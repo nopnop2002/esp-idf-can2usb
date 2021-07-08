@@ -49,6 +49,8 @@ ESP32-S2 BOARD          USB CONNECTOR
                           --
 ```
 
+This connector is used with USB OTG.   
+
 # Test Circuit   
 ```
    +-----------+ +-----------+ +-----------+ 
@@ -131,6 +133,19 @@ I used screen.
 # Brows data Using python script
 You can use read.py script. ```python read.py```   
 ![python](https://user-images.githubusercontent.com/6020549/124849418-b3100180-dfd9-11eb-869e-21b47505354a.jpg)
+
+
+# Powerd from USB OTG   
+After writing the firmware, the ESP32 can get power from the USB OTG.   
+```
+ESP32-S2 BOARD          USB CONNECTOR
+                          --
+    [  VIN  ]  --------> | || VCC
+    [GPIO 19]  --------> | || D-
+    [GPIO 20]  --------> | || D+
+    [  GND  ]  --------> | || GND
+                          --
+```
 
 # Troubleshooting   
 There is a module of SN65HVD230 like this.   
