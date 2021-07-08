@@ -10,7 +10,7 @@ esp-idf v4.2-dev-2243 or later.
 Use twai(Two-Wire Automotive Interface) driver instead of can driver.   
 
 # Hardware requirements
-1. ESP32-S2 Development board.   
+1. ESP32-S2 Development board   
 Because the ESP32 does not support USB OTG.   
 
 2. SN65HVD23x CAN-BUS Transceiver   
@@ -33,8 +33,8 @@ Because the ESP32 does not support USB OTG.
 3. Termination resistance   
 I used 150 ohms.   
 
-4.USB Connector   
-I used this:
+4. USB Connector   
+I used this:   
 ![usb-connector](https://user-images.githubusercontent.com/6020549/124848149-3714ba00-dfd7-11eb-8344-8b120790c5c5.JPG)
 
 ```
@@ -99,12 +99,12 @@ idf.py flash
 ![config-app](https://user-images.githubusercontent.com/6020549/124848275-7f33dc80-dfd7-11eb-8a15-1ea217417e34.jpg)
 
 # Definition from CANbus to USB
-When CANbus data is received, it is sent by HTTP POST according to csv/can2http.csv.   
+When CANbus data is received, it is sent by HTTP POST according to csv/can2usb.csv.   
 The file can2usb.csv has three columns.   
 In the first column you need to specify the CAN Frame type.   
 The CAN frame type is either S(Standard frame) or E(Extended frame).   
 In the second column you have to specify the CAN-ID as a hexdecimal number.   
-In the last column you have to specify the Frame Name. This project not use this column.
+In the last column you have to specify the Frame Name. This project does not use this column.   
 
 ```
 S,101,Water Temperature
@@ -121,13 +121,13 @@ I used TeraTerm.
 
 # Brows data Using Linux Terminal Software
 When you connect the USB cable to the USB port on your Linux machine and build the firmware, a new /dev/tty device will appear.   
-Open a new tty devicet in the terminal software.   
+Open a new tty device in the terminal software.   
+Most occasions, the device is /dev/ttyACM0.   
 I used screen.   
 ![screen](https://user-images.githubusercontent.com/6020549/124849312-79d79180-dfd9-11eb-9e58-044af2166632.jpg)
 
 # Brows data Using python script
-You can use read.py script.   
-```read.py```
+You can use read.py script. ```python read.py```   
 ![python](https://user-images.githubusercontent.com/6020549/124849418-b3100180-dfd9-11eb-869e-21b47505354a.jpg)
 
 # Troubleshooting   
