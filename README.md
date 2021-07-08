@@ -89,8 +89,8 @@ Check [here](http://www.ti.com/lit/an/slla337/slla337.pdf).
 
 # Installation for ESP32-S2
 ```
-git clone https://github.com/nopnop2002/esp-idf-can2http
-cd esp-idf-can2http
+git clone https://github.com/nopnop2002/esp-idf-can2usb
+cd esp-idf-can2usb
 idf.py set-target esp32s2
 idf.py menuconfig
 idf.py flash
