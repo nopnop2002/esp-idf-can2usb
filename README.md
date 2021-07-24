@@ -14,7 +14,7 @@ Use twai(Two-Wire Automotive Interface) driver instead of can driver.
 
 # Hardware requirements
 1. ESP32-S2 Development board   
-Because the ESP32 does not support USB OTG.   
+Because the ESP32/ESP32-C3 does not support USB OTG.   
 
 2. SN65HVD23x CAN-BUS Transceiver   
 
