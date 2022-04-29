@@ -1,6 +1,6 @@
 # esp-idf-can2usb
 CANbus to USB bridge using esp32.   
-The ESP32-S2 has a full-speed USB OTG peripheral with integrated transceivers and is compliant with the USB 1.1 specification.   
+The ESP32-S2/S3 has a full-speed USB OTG peripheral with integrated transceivers and is compliant with the USB 1.1 specification.   
 GPIO19 and GPIO20 can be used as D- and D + of USB respectively.   
 
 It's purpose is to be a bridge between a CAN-Bus and a USB OTG.    
@@ -13,12 +13,12 @@ esp-idf v4.2-dev-2243 or later.
 Use twai(Two-Wire Automotive Interface) driver instead of can driver.   
 
 # Hardware requirements
-1. ESP32-S2 Development board   
-Because the ESP32/ESP32-C3 does not support USB OTG.   
+1. ESP32-S2/S3 Development board   
+Because the ESP32-S2/S3 does support USB OTG.   
 
 2. SN65HVD23x CAN-BUS Transceiver   
 
-|SN65HVD23x||ESP32-S2||
+|SN65HVD23x||ESP32-S2/S3||
 |:-:|:-:|:-:|:-:|
 |D(CTX)|--|GPIO17|(*1)|
 |GND|--|GND||
@@ -41,13 +41,13 @@ I used this:
 ![usb-connector](https://user-images.githubusercontent.com/6020549/124848149-3714ba00-dfd7-11eb-8344-8b120790c5c5.JPG)
 
 ```
-ESP32-S2 BOARD          USB CONNECTOR
-                          --
-                         | || VCC
-    [GPIO 19]  --------> | || D-
-    [GPIO 20]  --------> | || D+
-    [  GND  ]  --------> | || GND
-                          --
+ESP32-S2/S3 BOARD          USB CONNECTOR
+                            --
+                           | || VCC
+    [GPIO 19]    --------> | || D-
+    [GPIO 20]    --------> | || D+
+    [  GND  ]    --------> | || GND
+                            --
 ```
 
 This connector is used with USB OTG.   
@@ -90,11 +90,11 @@ __NOTE__
 Check [here](http://www.ti.com/lit/an/slla337/slla337.pdf).
 
 
-# Installation for ESP32-S2
+# Installation for ESP32-S2/S3
 ```
 git clone https://github.com/nopnop2002/esp-idf-can2usb
 cd esp-idf-can2usb
-idf.py set-target esp32s2
+idf.py set-target {esp32s2/esp32s3}
 idf.py menuconfig
 idf.py flash
 ```
@@ -139,13 +139,13 @@ You can use read.py script. ```python read.py```
 # Powerd from USB OTG   
 After writing the firmware, the ESP32 can get power from the USB OTG.   
 ```
-ESP32-S2 BOARD          USB CONNECTOR
-                          --
-    [  VIN  ]  --------> | || VCC
-    [GPIO 19]  --------> | || D-
-    [GPIO 20]  --------> | || D+
-    [  GND  ]  --------> | || GND
-                          --
+ESP32-S2/S3 BOARD          USB CONNECTOR
+                            --
+    [  VIN  ]    --------> | || VCC
+    [GPIO 19]    --------> | || D-
+    [GPIO 20]    --------> | || D+
+    [  GND  ]    --------> | || GND
+                            --
 ```
 
 # Troubleshooting   

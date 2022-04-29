@@ -63,6 +63,7 @@ menu "Application Configuration"
 
 	config ENABLE_PRINT
 		bool "Output the received CAN FRAME to STDOUT"
+		default y
 		help
 			Output the received CAN FRAME to STDOUT.
 
