@@ -9,8 +9,8 @@ Unlike the standard serial port, the USB OTG port does not display initial outpu
 ![slide0001](https://user-images.githubusercontent.com/6020549/124847532-0718e700-dfd6-11eb-99f8-45ffef024304.jpg)
 
 # Software requirement
-esp-idf v4.2-dev-2243 or later.   
-Use twai(Two-Wire Automotive Interface) driver instead of can driver.   
+esp-idf v4.4 or later.   
+This is because this version supports ESP32-S3.   
 
 # Hardware requirements
 1. ESP32-S2/S3 Development board   
