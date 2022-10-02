@@ -42,12 +42,12 @@ I used this:
 
 ```
 ESP32-S2/S3 BOARD          USB CONNECTOR
-                            --
+                           +--+
                            | || VCC
     [GPIO 19]    --------> | || D-
     [GPIO 20]    --------> | || D+
     [  GND  ]    --------> | || GND
-                            --
+                           +--+
 ```
 
 This connector is used with USB OTG.   
