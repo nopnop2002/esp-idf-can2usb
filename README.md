@@ -140,12 +140,12 @@ You can use read.py script. ```python read.py```
 After writing the firmware, the ESP32 can get power from the USB OTG.   
 ```
 ESP32-S2/S3 BOARD          USB CONNECTOR
-                            --
+                           +--+
     [  VIN  ]    --------> | || VCC
     [GPIO 19]    --------> | || D-
     [GPIO 20]    --------> | || D+
     [  GND  ]    --------> | || GND
-                            --
+                           +--+
 ```
 
 # Troubleshooting   
