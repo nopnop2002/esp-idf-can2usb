@@ -11,7 +11,9 @@
 // This example contains minimal code to make ESP32-S2 based device
 // recognizable by USB-host devices as a USB Serial Device.
 
+#include <stdio.h>
 #include <stdint.h>
+#include <inttypes.h>
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -249,7 +251,7 @@ esp_err_t build_table(TOPIC_t **topics, char *file, int16_t *ntopic)
 void dump_table(TOPIC_t *topics, int16_t ntopic)
 {
 	for(int i=0;i<ntopic;i++) {
-		ESP_LOGI(pcTaskGetName(0), "topics[%d] frame=%d canid=0x%x topic=[%s] topic_len=%d",
+		ESP_LOGI(pcTaskGetName(0), "topics[%d] frame=%d canid=0x%"PRIx32" topic=[%s] topic_len=%d",
 		i, (topics+i)->frame, (topics+i)->canid, (topics+i)->topic, (topics+i)->topic_len);
 	}
 
@@ -319,7 +321,7 @@ void app_main(void)
 	FRAME_t frameBuf;
 	while(1) {
 		xQueueReceive(xQueue_usb, &frameBuf, portMAX_DELAY);
-		ESP_LOGI(TAG, "isConnected=%d canid=%x ext=%d topic=[%s]",
+		ESP_LOGI(TAG, "isConnected=%d canid=0x%"PRIx32" ext=%d topic=[%s]",
 			isConnected, frameBuf.canid, frameBuf.ext, frameBuf.topic);
 		for(int i=0;i<frameBuf.data_len;i++) {
 			ESP_LOGI(TAG, "DATA=%x", frameBuf.data[i]);
