@@ -17,21 +17,9 @@ This is because this version supports ESP32-S3.
 Because the ESP32-S2/S3 does support USB OTG.   
 
 2. SN65HVD23x CAN-BUS Transceiver   
-
-|SN65HVD23x||ESP32-S2/S3||
-|:-:|:-:|:-:|:-:|
-|D(CTX)|--|GPIO17|(*1)|
-|GND|--|GND||
-|Vcc|--|3.3V||
-|R(CRX)|--|GPIO18|(*1)|
-|Vref|--|N/C||
-|CANL|--||To CAN Bus|
-|CANH|--||To CAN Bus|
-|RS|--|GND|(*2)|
-
-(*1) You can change using menuconfig.
-
-(*2) N/C for SN65HVD232
+SN65HVD23x series has 230/231/232.   
+They differ in standby/sleep mode functionality.   
+Other features are the same.   
 
 3. Termination resistance   
 I used 150 ohms.   
@@ -51,6 +39,22 @@ ESP32-S2/S3 BOARD          USB CONNECTOR
 ```
 
 This connector is used with USB OTG.   
+
+# Wireing   
+|SN65HVD23x||ESP32-S2/S3||
+|:-:|:-:|:-:|:-:|
+|D(CTX)|--|GPIO17|(*1)|
+|GND|--|GND||
+|Vcc|--|3.3V||
+|R(CRX)|--|GPIO18|(*1)|
+|Vref|--|N/C||
+|CANL|--||To CAN Bus|
+|CANH|--||To CAN Bus|
+|RS|--|GND|(*2)|
+
+(*1) You can change using menuconfig.
+
+(*2) N/C for SN65HVD232
 
 # Test Circuit   
 ```
