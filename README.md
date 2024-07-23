@@ -176,3 +176,9 @@ If the transmission fails, these are the possible causes.
 
 https://github.com/nopnop2002/esp-idf-can2mqtt
 
+https://github.com/nopnop2002/esp-idf-can2http
+
+https://github.com/nopnop2002/esp-idf-can2socket
+
+https://github.com/nopnop2002/esp-idf-can2websocket
+
