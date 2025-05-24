@@ -25,7 +25,7 @@ Other features are the same.
 I used 150 ohms.   
 
 4. USB Connector   
-I used this:   
+I used this USB Mini femail:   
 ![usb-connector](https://user-images.githubusercontent.com/6020549/124848149-3714ba00-dfd7-11eb-8344-8b120790c5c5.JPG)
 
 ```
