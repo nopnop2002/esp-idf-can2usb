@@ -9,8 +9,9 @@ Unlike the standard serial port, the USB OTG port does not display initial outpu
 ![slide0001](https://user-images.githubusercontent.com/6020549/124847532-0718e700-dfd6-11eb-99f8-45ffef024304.jpg)
 
 # Software requirement
-esp-idf v4.4/v5.0.   
-This is because this version supports ESP32-S3.   
+ESP-IDF V5.0 or later.   
+ESP-IDF V4.4 release branch reached EOL in July 2024.   
+ESP-IDF V5.1 is required when using ESP32-C6.   
 
 # Hardware requirements
 1. ESP32-S2/S3 Development board   
