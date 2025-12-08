@@ -289,11 +289,7 @@ void app_main(void)
 	// Mount SPIFFS
 	char *partition_label = "storage";
 	char *base_path = "/spiffs"; 
-	esp_err_t ret = mountSPIFFS(partition_label, base_path);
-	if (ret != ESP_OK) {
-		ESP_LOGE(TAG, "mountSPIFFS fail");
-		while(1) { vTaskDelay(1); }
-	}
+	eESP_ERROR_CHECK(mountSPIFFS(partition_label, base_path));
 
 	// Install and start TWAI driver
 	ESP_LOGI(TAG, "%s",BITRATE);
