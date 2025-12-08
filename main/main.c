@@ -289,7 +289,7 @@ void app_main(void)
 	// Mount SPIFFS
 	char *partition_label = "storage";
 	char *base_path = "/spiffs"; 
-	eESP_ERROR_CHECK(mountSPIFFS(partition_label, base_path));
+	ESP_ERROR_CHECK(mountSPIFFS(partition_label, base_path));
 
 	// Install and start TWAI driver
 	ESP_LOGI(TAG, "%s",BITRATE);
@@ -307,7 +307,7 @@ void app_main(void)
 	configASSERT( xQueue_usb );
 
 	// build publish table
-	ret = build_table(&publish, "/spiffs/can2usb.csv", &npublish);
+	esp_err_t ret = build_table(&publish, "/spiffs/can2usb.csv", &npublish);
 	if (ret != ESP_OK) {
 		ESP_LOGE(TAG, "build publish table fail");
 		while(1) { vTaskDelay(1); }
