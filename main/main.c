@@ -1,4 +1,4 @@
-/* USB Example
+/* tinyusb cdc Example
 
    This example code is in the Public Domain (or CC0 licensed, at your option.)
 
@@ -6,10 +6,6 @@
    software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
    CONDITIONS OF ANY KIND, either express or implied.
 */
-
-// DESCRIPTION:
-// This example contains minimal code to make ESP32-S2 based device
-// recognizable by USB-host devices as a USB Serial Device.
 
 #include <stdio.h>
 #include <stdint.h>
@@ -21,8 +17,8 @@
 #include "esp_vfs.h"
 #include "nvs_flash.h"
 #include "tinyusb.h"
-#include "tusb_cdc_acm.h"
-#include "sdkconfig.h"
+#include "tinyusb_default_config.h"
+#include "tinyusb_cdc_acm.h"
 #include "esp_spiffs.h" 
 #include "driver/twai.h" // Update from V4.2
 
@@ -253,7 +249,7 @@ esp_err_t build_table(TOPIC_t **topics, char *file, int16_t *ntopic)
 void dump_table(TOPIC_t *topics, int16_t ntopic)
 {
 	for(int i=0;i<ntopic;i++) {
-		ESP_LOGI(pcTaskGetName(0), "topics[%d] frame=%d canid=0x%"PRIx32" topic=[%s] topic_len=%d",
+		ESP_LOGI(TAG, "topics[%d] frame=%d canid=0x%"PRIx32" topic=[%s] topic_len=%d",
 		i, (topics+i)->frame, (topics+i)->canid, (topics+i)->topic, (topics+i)->topic_len);
 	}
 
@@ -264,26 +260,33 @@ void twai_task(void *pvParameters);
 void app_main(void)
 {
 	ESP_LOGI(TAG, "USB initialization");
-	tinyusb_config_t tusb_cfg = {}; // the configuration using default values
+	const tinyusb_config_t tusb_cfg = TINYUSB_DEFAULT_CONFIG();
 	ESP_ERROR_CHECK(tinyusb_driver_install(&tusb_cfg));
 
-	tinyusb_config_cdcacm_t amc_cfg = {
-		.usb_dev = TINYUSB_USBDEV_0,
+	tinyusb_config_cdcacm_t acm_cfg = {
 		.cdc_port = TINYUSB_CDC_ACM_0,
-		.rx_unread_buf_sz = 64,
 		.callback_rx = &tinyusb_cdc_rx_callback, // the first way to register a callback
 		.callback_rx_wanted_char = NULL,
 		.callback_line_state_changed = NULL,
 		.callback_line_coding_changed = NULL
 	};
-
-	ESP_ERROR_CHECK(tusb_cdc_acm_init(&amc_cfg));
+	ESP_ERROR_CHECK(tinyusb_cdcacm_init(&acm_cfg));
 
 	/* the second way to register a callback */
 	ESP_ERROR_CHECK(tinyusb_cdcacm_register_callback(
-						TINYUSB_CDC_ACM_0,
-						CDC_EVENT_LINE_STATE_CHANGED,
-						&tinyusb_cdc_line_state_changed_callback));
+		TINYUSB_CDC_ACM_0,
+		CDC_EVENT_LINE_STATE_CHANGED,
+		&tinyusb_cdc_line_state_changed_callback));
+
+#if (CONFIG_TINYUSB_CDC_COUNT > 1)
+    acm_cfg.cdc_port = TINYUSB_CDC_ACM_1;
+    ESP_ERROR_CHECK(tusb_cdc_acm_init(&acm_cfg));
+    ESP_ERROR_CHECK(tinyusb_cdcacm_register_callback(
+        TINYUSB_CDC_ACM_1,
+        CDC_EVENT_LINE_STATE_CHANGED,
+        &tinyusb_cdc_line_state_changed_callback));
+#endif
+
 	ESP_LOGI(TAG, "USB initialization DONE");
 
 	// Mount SPIFFS

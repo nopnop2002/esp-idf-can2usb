@@ -1,7 +1,8 @@
 #
-# Supplicant
+# Communication Device Class (CDC)
 #
-CONFIG_TINYUSB=y
+# esp-idf v4 requires CONFIG_TINYUSB.
+# CONFIG_TINYUSB=y
 CONFIG_TINYUSB_CDC_ENABLED=y
 
 #
