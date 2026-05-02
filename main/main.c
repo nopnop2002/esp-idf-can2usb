@@ -20,7 +20,6 @@
 #include "tinyusb_default_config.h"
 #include "tinyusb_cdc_acm.h"
 #include "esp_spiffs.h" 
-#include "driver/twai.h" // Update from V4.2
 
 #include "cJSON.h"
 
@@ -29,34 +28,6 @@
 static const char *TAG = "MAIN";
 //static uint8_t buf[CONFIG_USB_CDC_RX_BUFSIZE + 1];
 static uint8_t buf[CONFIG_TINYUSB_CDC_RX_BUFSIZE + 1];
-
-static const twai_filter_config_t f_config = TWAI_FILTER_CONFIG_ACCEPT_ALL();
-
-#if CONFIG_CAN_BITRATE_25
-static const twai_timing_config_t t_config = TWAI_TIMING_CONFIG_25KBITS();
-#define BITRATE "Bitrate is 25 Kbit/s"
-#elif CONFIG_CAN_BITRATE_50
-static const twai_timing_config_t t_config = TWAI_TIMING_CONFIG_50KBITS();
-#define BITRATE "Bitrate is 50 Kbit/s"
-#elif CONFIG_CAN_BITRATE_100
-static const twai_timing_config_t t_config = TWAI_TIMING_CONFIG_100KBITS();
-#define BITRATE "Bitrate is 100 Kbit/s"
-#elif CONFIG_CAN_BITRATE_125
-static const twai_timing_config_t t_config = TWAI_TIMING_CONFIG_125KBITS();
-#define BITRATE "Bitrate is 125 Kbit/s"
-#elif CONFIG_CAN_BITRATE_250
-static const twai_timing_config_t t_config = TWAI_TIMING_CONFIG_250KBITS();
-#define BITRATE "Bitrate is 250 Kbit/s"
-#elif CONFIG_CAN_BITRATE_500
-static const twai_timing_config_t t_config = TWAI_TIMING_CONFIG_500KBITS();
-#define BITRATE "Bitrate is 500 Kbit/s"
-#elif CONFIG_CAN_BITRATE_800
-static const twai_timing_config_t t_config = TWAI_TIMING_CONFIG_800KBITS();
-#define BITRATE "Bitrate is 800 Kbit/s"
-#elif CONFIG_CAN_BITRATE_1000
-static const twai_timing_config_t t_config = TWAI_TIMING_CONFIG_1MBITS();
-#define BITRATE "Bitrate is 1 Mbit/s"
-#endif
 
 QueueHandle_t xQueue_usb;
 
@@ -279,12 +250,12 @@ void app_main(void)
 		&tinyusb_cdc_line_state_changed_callback));
 
 #if (CONFIG_TINYUSB_CDC_COUNT > 1)
-    acm_cfg.cdc_port = TINYUSB_CDC_ACM_1;
-    ESP_ERROR_CHECK(tusb_cdc_acm_init(&acm_cfg));
-    ESP_ERROR_CHECK(tinyusb_cdcacm_register_callback(
-        TINYUSB_CDC_ACM_1,
-        CDC_EVENT_LINE_STATE_CHANGED,
-        &tinyusb_cdc_line_state_changed_callback));
+	acm_cfg.cdc_port = TINYUSB_CDC_ACM_1;
+	ESP_ERROR_CHECK(tusb_cdc_acm_init(&acm_cfg));
+	ESP_ERROR_CHECK(tinyusb_cdcacm_register_callback(
+		TINYUSB_CDC_ACM_1,
+		CDC_EVENT_LINE_STATE_CHANGED,
+		&tinyusb_cdc_line_state_changed_callback));
 #endif
 
 	ESP_LOGI(TAG, "USB initialization DONE");
@@ -293,17 +264,6 @@ void app_main(void)
 	char *partition_label = "storage";
 	char *base_path = "/spiffs"; 
 	ESP_ERROR_CHECK(mountSPIFFS(partition_label, base_path));
-
-	// Install and start TWAI driver
-	ESP_LOGI(TAG, "%s",BITRATE);
-	ESP_LOGI(TAG, "CTX_GPIO=%d",CONFIG_CTX_GPIO);
-	ESP_LOGI(TAG, "CRX_GPIO=%d",CONFIG_CRX_GPIO);
-
-	static const twai_general_config_t g_config = TWAI_GENERAL_CONFIG_DEFAULT(CONFIG_CTX_GPIO, CONFIG_CRX_GPIO, TWAI_MODE_NORMAL);
-	ESP_ERROR_CHECK(twai_driver_install(&g_config, &t_config, &f_config));
-	ESP_LOGI(TAG, "Driver installed");
-	ESP_ERROR_CHECK(twai_start());
-	ESP_LOGI(TAG, "Driver started");
 
 	// Create Queue
 	xQueue_usb = xQueueCreate( 10, sizeof(FRAME_t) );
@@ -321,14 +281,17 @@ void app_main(void)
 
 	FRAME_t frameBuf;
 	while(1) {
-		xQueueReceive(xQueue_usb, &frameBuf, portMAX_DELAY);
+		if (xQueueReceive(xQueue_usb, &frameBuf, portMAX_DELAY) != pdPASS) {
+			ESP_LOGE(TAG, "xQueueReceive fail");
+			break;
+		}
 		ESP_LOGI(TAG, "isConnected=%d canid=0x%"PRIx32" ext=%d topic=[%s]",
 			isConnected, frameBuf.canid, frameBuf.ext, frameBuf.topic);
+		if (isConnected == false) continue;
+
 		for(int i=0;i<frameBuf.data_len;i++) {
 			ESP_LOGI(TAG, "DATA=%x", frameBuf.data[i]);
 		}
-	
-		if (isConnected == false) continue;
 
 		// build JSON string
 		cJSON *root;
@@ -352,12 +315,12 @@ void app_main(void)
 		ESP_LOGI(TAG, "json_string\n%s",json_string);
 		cJSON_Delete(root);
 
-		/* write to USB */
+		// write to USB
 		uint8_t crlf[2] = { 0x0d, 0x0a };
 		tinyusb_cdcacm_write_queue(TINYUSB_CDC_ACM_0, (uint8_t *)json_string, strlen(json_string));
 		tinyusb_cdcacm_write_queue(TINYUSB_CDC_ACM_0, crlf, 2);
 		tinyusb_cdcacm_write_flush(TINYUSB_CDC_ACM_0, 0);
 		
 		cJSON_free(json_string);
-	}
+	} // end while
 }

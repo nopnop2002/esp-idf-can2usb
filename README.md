@@ -13,13 +13,7 @@ ESP-IDF V5.0 or later.
 ESP-IDF V4.4 release branch reached EOL in July 2024.   
 
 __Note for ESP-IDF V6__   
-This option is required for ESP-IDF V6 because this project uses legacy drivers.   
-<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/fd46966b-6a9f-4034-a9e3-b13a75c02bc8" />
-
-ESP-IDF V6 gives this warning, but it still works.   
-```
-#warning "The legacy TWAI driver is deprecated, please use esp_twai.h"
-```
+Under ESP-IDF V6.0 or later, this project uses a new twai driver.   
 
 # Hardware requirements
 1. ESP32-S2/S3 Development board   
@@ -182,12 +176,11 @@ If the transmission fails, these are the possible causes.
 - Stub length in CAN bus is too long. See [here](https://e2e.ti.com/support/interface-group/interface/f/interface-forum/378932/iso1050-can-bus-stub-length).
 
 # Reference
-
-https://github.com/nopnop2002/esp-idf-candump
-
 https://github.com/nopnop2002/esp-idf-can2mqtt
 
 https://github.com/nopnop2002/esp-idf-can2http
+
+https://github.com/nopnop2002/esp-idf-can2bt
 
 https://github.com/nopnop2002/esp-idf-can2socket
 
