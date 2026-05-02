@@ -41,8 +41,6 @@ Under ESP-IDF V6.0 or later, this project uses a new twai driver.
 	                           +--+
 	```
 
-This connector is used with USB OTG.   
-
 # Wireing   
 |SN65HVD23x||ESP32-S2/S3||
 |:-:|:-:|:-:|:-:|
