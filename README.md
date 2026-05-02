@@ -17,29 +17,29 @@ Under ESP-IDF V6.0 or later, this project uses a new twai driver.
 
 # Hardware requirements
 1. ESP32-S2/S3 Development board   
-Because the ESP32-S2/S3 does support USB OTG.   
+	Because the ESP32-S2/S3 does support USB OTG.   
 
 2. SN65HVD23x CAN-BUS Transceiver   
-SN65HVD23x series has 230/231/232.   
-They differ in standby/sleep mode functionality.   
-Other features are the same.   
+	SN65HVD23x series has 230/231/232.   
+	They differ in standby/sleep mode functionality.   
+	Other features are the same.   
 
 3. Termination resistance   
-I used 150 ohms.   
+	I used 150 ohms.   
 
 4. USB Connector   
-I used this USB Mini femail:   
-![usb-connector](https://user-images.githubusercontent.com/6020549/124848149-3714ba00-dfd7-11eb-8344-8b120790c5c5.JPG)
+	I used this USB Mini femail:   
+	![usb-connector](https://user-images.githubusercontent.com/6020549/124848149-3714ba00-dfd7-11eb-8344-8b120790c5c5.JPG)
 
-```
-ESP32-S2/S3 BOARD          USB CONNECTOR
-                           +--+
-                           | || VCC
-    [GPIO 19]    --------> | || D-
-    [GPIO 20]    --------> | || D+
-    [  GND  ]    --------> | || GND
-                           +--+
-```
+	```
+	ESP32-S2/S3 BOARD          USB CONNECTOR
+	                           +--+
+	                           | || VCC
+	    [GPIO 19]    --------> | || D-
+	    [GPIO 20]    --------> | || D+
+	    [  GND  ]    --------> | || GND
+	                           +--+
+	```
 
 This connector is used with USB OTG.   
 
