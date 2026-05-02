@@ -28,6 +28,7 @@ Under ESP-IDF V6.0 or later, this project uses a new twai driver.
 	I used 150 ohms.   
 
 4. USB Connector   
+	The onboard USB port does not have USB OTG functionality.   
 	I used this USB Mini femail:   
 	![usb-connector](https://user-images.githubusercontent.com/6020549/124848149-3714ba00-dfd7-11eb-8344-8b120790c5c5.JPG)
 
