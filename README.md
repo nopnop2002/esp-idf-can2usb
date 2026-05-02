@@ -103,7 +103,7 @@ __NOTE__
 Check [here](http://www.ti.com/lit/an/slla337/slla337.pdf).
 
 
-# Installation for ESP32-S2/S3
+# Installation on ESP32-S2/S3
 ```
 git clone https://github.com/nopnop2002/esp-idf-can2usb
 cd esp-idf-can2usb
