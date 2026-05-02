@@ -145,7 +145,7 @@ You can use read.py script. ```python read.py```
 
 # Powerd from USB OTG   
 After writing the firmware, the ESP32 can get power from the USB OTG.   
-___Stop supplying power supply from the onboard USB port.___   
+___Stop power supply from the onboard USB port.___   
 ```
 ESP32-S2/S3 BOARD          USB CONNECTOR
                            +--+
