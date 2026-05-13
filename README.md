@@ -1,12 +1,17 @@
 # esp-idf-can2usb
 CANbus to USB bridge using esp32.   
-The ESP32-S2/S3 has a full-speed USB OTG peripheral with integrated transceivers and is compliant with the USB 1.1 specification.   
-GPIO19 and GPIO20 can be used as D- and D + of USB respectively.   
+The ESP32-S2/S3/P4 has a full-speed USB OTG peripheral with integrated transceivers and is compliant with the USB 1.1 specification.   
+On the ESP32-S2/S3, GPIO19 and GPIO20 are used as USB D- and D+.   
+On the ESP32-P4, GPIO26 and GPIO27 are used as USB D- and D+.   
 
 It's purpose is to be a bridge between a CAN-Bus and a USB OTG.    
 Unlike the standard serial port, the USB OTG port does not display initial output from the ROM bootloader.   
 
 ![slide0001](https://user-images.githubusercontent.com/6020549/124847532-0718e700-dfd6-11eb-99f8-45ffef024304.jpg)
+
+__NOTE for ESP32P4___   
+The full-speed USB OTG port is disabled by default.   
+You need to enable it.   
 
 # Software requirement
 ESP-IDF V5.0 or later.   
@@ -16,8 +21,8 @@ __Note for ESP-IDF V6__
 Under ESP-IDF V6.0 or later, this project uses a new twai driver.   
 
 # Hardware requirements
-1. ESP32-S2/S3 Development board   
-	Because the ESP32-S2/S3 does support USB OTG.   
+1. ESP32-S2/S3/P4 Development board   
+	Because the ESP32-S2/S3/P4 does support USB OTG.   
 
 2. SN65HVD23x CAN-BUS Transceiver   
 	SN65HVD23x series has 230/231/232.   
@@ -40,19 +45,27 @@ Under ESP-IDF V6.0 or later, this project uses a new twai driver.
 	    [GPIO 20]    --------> | || D+
 	    [  GND  ]    --------> | || GND
 	                           +--+
+
+	ESP32-P4 BOARD             USB CONNECTOR
+	                           +--+
+	                           | || VCC
+	    [GPIO 26]    --------> | || D-
+	    [GPIO 27]    --------> | || D+
+	    [  GND  ]    --------> | || GND
+	                           +--+
 	```
 
 # Wireing   
-|SN65HVD23x||ESP32-S2/S3||
-|:-:|:-:|:-:|:-:|
-|D(CTX)|--|GPIO17|(*1)|
-|GND|--|GND||
-|Vcc|--|3.3V||
-|R(CRX)|--|GPIO18|(*1)|
-|Vref|--|N/C||
-|CANL|--||To CAN Bus|
-|CANH|--||To CAN Bus|
-|RS|--|GND|(*2)|
+|SN65HVD23x||ESP32-S2/S3|ESP32-P4||
+|:-:|:-:|:-:|:-:|:-:|
+|D(CTX)|--|GPIO17|GPIO2|(*1)|
+|GND|--|GND|GND||
+|Vcc|--|3.3V|3.3V||
+|R(CRX)|--|GPIO18|GPIO3|(*1)|
+|Vref|--|N/C|N/C||
+|CANL|--|||To CAN Bus|
+|CANH|--|||To CAN Bus|
+|RS|--|GND|GND|(*2)|
 
 (*1) You can change using menuconfig.
 
@@ -96,11 +109,11 @@ __NOTE__
 Check [here](http://www.ti.com/lit/an/slla337/slla337.pdf).
 
 
-# Installation on ESP32-S2/S3
+# Installation
 ```
 git clone https://github.com/nopnop2002/esp-idf-can2usb
 cd esp-idf-can2usb
-idf.py set-target {esp32s2/esp32s3}
+idf.py set-target {esp32s2/esp32s3/esp32p4}
 idf.py menuconfig
 idf.py flash
 ```
@@ -146,11 +159,11 @@ You can use read.py script. ```python read.py```
 After writing the firmware, the ESP32 can get power from the USB OTG.   
 ___Stop power supply from the onboard USB port.___   
 ```
-ESP32-S2/S3 BOARD          USB CONNECTOR
+    ESP BOARD              USB CONNECTOR
                            +--+
     [  VIN  ]    --------> | || VCC
-    [GPIO 19]    --------> | || D-
-    [GPIO 20]    --------> | || D+
+    [USB_DM ]    --------> | || D-
+    [USB DP ]    --------> | || D+
     [  GND  ]    --------> | || GND
                            +--+
 ```

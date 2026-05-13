@@ -231,7 +231,10 @@ void twai_task(void *pvParameters);
 void app_main(void)
 {
 	ESP_LOGI(TAG, "USB initialization");
-	const tinyusb_config_t tusb_cfg = TINYUSB_DEFAULT_CONFIG();
+	tinyusb_config_t tusb_cfg = TINYUSB_DEFAULT_CONFIG();
+#ifdef CONFIG_IDF_TARGET_ESP32P4
+    tusb_cfg.port = TINYUSB_PORT_FULL_SPEED_0;
+#endif
 	ESP_ERROR_CHECK(tinyusb_driver_install(&tusb_cfg));
 
 	tinyusb_config_cdcacm_t acm_cfg = {
@@ -251,7 +254,7 @@ void app_main(void)
 
 #if (CONFIG_TINYUSB_CDC_COUNT > 1)
 	acm_cfg.cdc_port = TINYUSB_CDC_ACM_1;
-	ESP_ERROR_CHECK(tusb_cdc_acm_init(&acm_cfg));
+	ESP_ERROR_CHECK(tinyusb_cdcacm_init(&acm_cfg));
 	ESP_ERROR_CHECK(tinyusb_cdcacm_register_callback(
 		TINYUSB_CDC_ACM_1,
 		CDC_EVENT_LINE_STATE_CHANGED,
