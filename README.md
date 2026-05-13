@@ -9,7 +9,7 @@ Unlike the standard serial port, the USB OTG port does not display initial outpu
 
 ![slide0001](https://user-images.githubusercontent.com/6020549/124847532-0718e700-dfd6-11eb-99f8-45ffef024304.jpg)
 
-__NOTE for ESP32P4___   
+__NOTE for ESP32P4__   
 The full-speed USB OTG port is disabled by default.   
 You need to enable it.   
 
