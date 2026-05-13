@@ -11,7 +11,7 @@ Unlike the standard serial port, the USB OTG port does not display initial outpu
 
 __NOTE for ESP32P4__   
 The full-speed USB OTG port is disabled by default.   
-You need to enable it.   
+It needs to be explicitly enabled.   
 
 # Software requirement
 ESP-IDF V5.0 or later.   
